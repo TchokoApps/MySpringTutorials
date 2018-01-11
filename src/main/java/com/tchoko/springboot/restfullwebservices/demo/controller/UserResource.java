@@ -1,6 +1,7 @@
 package com.tchoko.springboot.restfullwebservices.demo.controller;
 
 import java.net.URI;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -13,42 +14,48 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.tchoko.springboot.restfullwebservices.demo.exception.UserNotFoundException;
-import com.tchoko.springboot.restfullwebservices.demo.model.UserEntity;
-import com.tchoko.springboot.restfullwebservices.demo.service.UserEntityRepository;
+import com.tchoko.springboot.restfullwebservices.demo.model.User;
+import com.tchoko.springboot.restfullwebservices.demo.service.UserDaoService;
 
 @RestController
 public class UserResource {
 
 	@Autowired
-	private UserEntityRepository userEntityRepository;
+	private UserDaoService service;
 
-	@GetMapping("/jpa/users")
-	public Iterable<UserEntity> retrieveAllUsers() {
-		return userEntityRepository.findAll();
+	@GetMapping("/users")
+	public List<User> retrieveAllUsers() {
+		return service.findAll();
 	}
 
-	@GetMapping("/jpa/users/{id}")
-	public UserEntity retrieveUser(@PathVariable int id) {
-		UserEntity userEntity = userEntityRepository.findById(id).orElse(null);
-
-		if (userEntity == null)
-			throw new UserNotFoundException("id-" + id);
-
-		return userEntity;
+	@GetMapping("/users/{id}")
+	public User retrieveUser(@PathVariable int id) {
+		User user = service.findOne(id);
+		
+		if(user==null)
+			throw new UserNotFoundException("id-"+ id);
+		
+		return user;
 	}
 
-	@DeleteMapping("/jpa/users/{id}")
+	@DeleteMapping("/users/{id}")
 	public void deleteUser(@PathVariable int id) {
-		userEntityRepository.deleteById(id);;
+		User user = service.deleteById(id);
+		
+		if(user==null)
+			throw new UserNotFoundException("id-"+ id);		
 	}
 
-	@PostMapping("/jpa/users")
-	public ResponseEntity<Object> createUser(@RequestBody UserEntity userEntity) {
-		UserEntity savedUser = userEntityRepository.save(userEntity);
-
-		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(savedUser.getId())
-				.toUri();
-
+	@PostMapping("/users")
+	public ResponseEntity<Object> createUser(@RequestBody User user) {
+		User savedUser = service.save(user);
+		
+		URI location = ServletUriComponentsBuilder
+			.fromCurrentRequest()
+			.path("/{id}")
+			.buildAndExpand(savedUser.getId()).toUri();
+		
 		return ResponseEntity.created(location).build();
+		
 	}
 }

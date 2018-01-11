@@ -22,7 +22,7 @@ public class In28MinutesRestfullWebServicesApplication implements CommandLineRun
 
 	@Override
 	public void run(String... args) throws Exception {
-		UserEntity userEntity = new UserEntity("Charles", new Date());
+		UserEntity userEntity = new UserEntity("gaston", new Date());
 		userEntityRepository.save(userEntity);
 		System.out.println("### User persisted: " + userEntity);
 		

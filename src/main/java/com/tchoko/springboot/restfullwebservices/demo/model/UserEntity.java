@@ -1,12 +1,13 @@
 package com.tchoko.springboot.restfullwebservices.demo.model;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.validation.constraints.Past;
-import javax.validation.constraints.Size;
+import javax.persistence.OneToMany;
 
 @Entity
 public class UserEntity {
@@ -15,16 +16,25 @@ public class UserEntity {
 	@GeneratedValue
 	private Integer id;
 
-	@Size(min=2, message="Name should have atleast 2 characters")
 	private String name;
 
-	@Past
 	private Date birthDate;
+
+	@OneToMany(mappedBy = "post")
+	Set<Post> posts = new HashSet<>();
+
+	public Set<Post> getPosts() {
+		return posts;
+	}
+
+	public void setPosts(Set<Post> posts) {
+		this.posts = posts;
+	}
 
 	protected UserEntity() {
 
 	}
-	
+
 	public UserEntity(String name, Date birthDate) {
 		this.name = name;
 		this.birthDate = birthDate;

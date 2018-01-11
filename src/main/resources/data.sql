@@ -1,3 +1,4 @@
-insert into user_entity (id, name, birth_date) values (100, 'charles', sysdate());
-insert into user_entity (id, name, birth_date) values (101, 'billy', sysdate());
-insert into user_entity (id, name, birth_date) values (102, 'fabrice', sysdate());
+insert into user_entity values (100, sysdate(), 'charles');
+insert into user_entity values (102, sysdate(), 'billy');
+insert into user_entity values (103, sysdate(), 'fabrice');
+insert into post values (1, 'Math for Kids', 100);
