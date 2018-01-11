@@ -46,14 +46,9 @@ public class UserJpaResource {
 			throw new UserNotFoundException("id-"+ id);		
 	}
 
-	//
-	// input - details of user
-	// output - CREATED & Return the created URI
 	@PostMapping("/users")
 	public ResponseEntity<Object> createUser(@RequestBody User user) {
 		User savedUser = service.save(user);
-		// CREATED
-		// /user/{id}     savedUser.getId()
 		
 		URI location = ServletUriComponentsBuilder
 			.fromCurrentRequest()
