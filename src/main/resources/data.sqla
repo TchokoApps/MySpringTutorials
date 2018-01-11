@@ -1,3 +1,0 @@
-insert into user_entity values(1, sysdate(), 'AB');
-insert into user_entity values(2, sysdate(), 'Jill');
-insert into user_entity values(3, sysdate(), 'Jam');
