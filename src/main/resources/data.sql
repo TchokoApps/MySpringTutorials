@@ -1,4 +1,7 @@
-insert into user_entity values (100, sysdate(), 'charles');
-insert into user_entity values (102, sysdate(), 'billy');
-insert into user_entity values (103, sysdate(), 'fabrice');
-insert into post values (1, 'Math for Kids', 100);
+insert into user values(1001, sysdate(), 'AB');
+insert into user values(1002, sysdate(), 'Jill');
+insert into user values(1003, sysdate(), 'Jam');
+
+insert into post values(2001, 'Math for kids', 1001);
+insert into post values(2002, 'Java for dummies', 1001);
+insert into post values(2003, 'Java EE for experts', 1001);

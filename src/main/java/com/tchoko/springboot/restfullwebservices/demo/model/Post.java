@@ -6,6 +6,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Post {
 
@@ -15,23 +17,12 @@ public class Post {
 
 	private String description;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	UserEntity userEntity;
-
-	public UserEntity getUserEntity() {
-		return userEntity;
-	}
-
-	public void setUserEntity(UserEntity userEntity) {
-		this.userEntity = userEntity;
-	}
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JsonIgnore
+	private User user;
 
 	public Post() {
 		super();
-	}
-
-	public Post(String description) {
-		this.description = description;
 	}
 
 	public Integer getId() {
@@ -50,9 +41,17 @@ public class Post {
 		this.description = description;
 	}
 
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
 	@Override
 	public String toString() {
-		return "\nPost [id=" + id + ", description=" + description + "]";
+		return "Post [id=" + id + ", description=" + description + "]";
 	}
 
 }
